@@ -62,6 +62,10 @@ public class MusicService extends Service {
         return mBinder;
     }
 
+    @Override
+    public void onRebind(Intent intent) {
+
+    }
 
     public class MyBinder extends Binder {
 
@@ -88,6 +92,19 @@ public class MusicService extends Service {
             try {
                 mMediaPlayer.reset();
                 mMediaPlayer.setDataSource(mContext, Uri.parse(DbConstant.PATH + musicId));
+                mMediaPlayer.prepare();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        public void setMusic(String path) {
+            if (mMediaPlayer.isPlaying()) {
+                mMediaPlayer.stop();
+            }
+            try {
+                mMediaPlayer.reset();
+                mMediaPlayer.setDataSource(path);
                 mMediaPlayer.prepare();
             } catch (IOException e) {
                 e.printStackTrace();

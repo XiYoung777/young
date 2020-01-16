@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,47 +18,42 @@ import android.widget.Toast;
 
 import com.template.young.fragment.FragmentContentLocalMusic;
 import com.template.young.fragment.FragmentPlaybar;
+import com.template.young.fragment.FragmentSingle;
+import com.template.young.model.MyApplication;
 import com.template.young.service.MusicService;
-import com.template.young.util.DatabaseHelper;
+
+
 
 public class LocalMusicActivity extends AppCompatActivity {
 
     private MusicService.MyBinder mBinder;
     private Context mContext = this;
+    private FragmentSingle mFragmentSingle;
 
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            mBinder = (MusicService.MyBinder) service;
-            //动态加载fragment
-            dynamicLoadingPlaybar();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_local_music);
 
-        Intent intent = new Intent(mContext, MusicService.class);
-        bindService(intent,mConnection, BIND_AUTO_CREATE);
         //初始化单击事件
         initClick();
         //动态加载content
         dynamicLoadingContent();
+        //动态加载fragment
+        dynamicLoadingPlaybar();
     }
 
     private void dynamicLoadingContent() {
+        MyApplication application = (MyApplication) getApplicationContext();
+        mBinder = application.getmBinder();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.activity_localmusic, new FragmentContentLocalMusic());
+        transaction.replace(R.id.localmusic_content, new FragmentContentLocalMusic(mBinder));
         transaction.commit();
     }
 
     private void dynamicLoadingPlaybar() {
+        MyApplication application = (MyApplication) getApplicationContext();
+        mBinder = application.getmBinder();
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.activity_localmusic, new FragmentPlaybar(mBinder));
         transaction.commit();

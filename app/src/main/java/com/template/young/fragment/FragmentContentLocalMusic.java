@@ -13,6 +13,7 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.material.tabs.TabLayout;
 import com.template.young.Adapter.LocalmusicViewPagerAdapter;
 import com.template.young.R;
+import com.template.young.service.MusicService;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,12 @@ public class FragmentContentLocalMusic extends Fragment {
     private ArrayList<Fragment> mFragmentList = new ArrayList<>();
     private ViewPager mViewpager;
     private TabLayout mTabLayout;
+    private MusicService.MyBinder mBinder;
+    private FragmentSingle mFragmentSingle;
+
+    public FragmentContentLocalMusic(MusicService.MyBinder mBinder) {
+        this.mBinder = mBinder;
+    }
 
     @Nullable
     @Override
@@ -34,7 +41,8 @@ public class FragmentContentLocalMusic extends Fragment {
     }
 
     private void initFragment() {
-        mFragmentList.add(new FragmentSingle());
+        mFragmentSingle = new FragmentSingle(mBinder);
+        mFragmentList.add(mFragmentSingle);
         mFragmentList.add(new FragmentSinger());
         mFragmentList.add(new FragmentSpecial());
         mFragmentList.add(new FragmentFolder());

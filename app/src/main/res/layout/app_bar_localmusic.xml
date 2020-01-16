@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/localmusic_content"
     android:orientation="vertical">
 
     <Toolbar
@@ -34,11 +35,5 @@
             android:layout_marginStart="@dimen/margin_localmusic_more_start"
             android:background="@drawable/toolbar_more" />
     </Toolbar>
-
-    <fragment
-        android:id="@+id/localmusic_content"
-        android:name="com.template.young.fragment.FragmentContentLocalMusic"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
 </LinearLayout>

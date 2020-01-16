@@ -13,7 +13,14 @@ import androidx.fragment.app.Fragment;
 import com.template.young.R;
 import com.template.young.service.MusicService;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FragmentPlaybar extends Fragment {
+
+    //playbar所绑定的为当前歌单,待定   service和该类中存放当前歌单最合适，到时候看哪个更方便
+    private List<Integer> mIndexList;
+    private int mPosition = 0;
 
     private ImageView mImageViewLast;
     private ImageView mImageViewPlay;
@@ -21,9 +28,21 @@ public class FragmentPlaybar extends Fragment {
     private MusicService.MyBinder mBinder;
     private ImageView mPlayImage;
     private int mPlayImageId = R.drawable.playbar_start;
+    private PlaybarCallbcak mPlayCallback;
+
+    public interface PlaybarCallbcak {
+        public void playMusic();
+        public void lastMusic();
+        public void nextMusic();
+    }
 
     public FragmentPlaybar(MusicService.MyBinder mBinder) {
         this.mBinder = mBinder;
+    }
+
+    public FragmentPlaybar(MusicService.MyBinder mBinder, PlaybarCallbcak mPlayCallback) {
+        this.mBinder = mBinder;
+        this.mPlayCallback = mPlayCallback;
     }
 
     @Nullable
@@ -50,13 +69,13 @@ public class FragmentPlaybar extends Fragment {
             @Override
             public void onClick(View v) {
                 if (mPlayImageId == R.drawable.playbar_start) {
-                    mPlayImage.setImageDrawable(getResources().getDrawable(R.drawable.playbar_pause));
+                    mPlayImage.setImageResource(R.drawable.playbar_pause);
                     mPlayImageId = R.drawable.playbar_pause;
                 } else {
-                    mPlayImage.setImageDrawable(getResources().getDrawable(R.drawable.playbar_start));
+                    mPlayImage.setImageResource(R.drawable.playbar_start);
                     mPlayImageId = R.drawable.playbar_start;
                 }
-                mBinder.playMusic();
+                mPlayCallback.playMusic();
             }
         });
 

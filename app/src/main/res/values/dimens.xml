@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="single_list_pic_size">50sp</dimen>
+    <dimen name="single_list_height">80sp</dimen>
     <dimen name="playbar_item_size">30sp</dimen>
     <dimen name="playbar_text_big_height">25sp</dimen>
-    <dimen name="playbar_text_big_size">20sp</dimen>
+    <dimen name="playbar_text_big_size">18sp</dimen>
     <dimen name="playbar_text_small_height">15sp</dimen>
     <dimen name="playbar_text_small_size">12sp</dimen>
     <dimen name="playbar_text_margin_top">25sp</dimen>
@@ -10,9 +12,9 @@
     <dimen name="list_text_width">300sp</dimen>
     <dimen name="playbar_text_height">40sp</dimen>
     <dimen name="playbar_imageview_size">50sp</dimen>
-    <dimen name="playbar_margin_top">770sp</dimen>
+    <dimen name="playbar_margin_top">600sp</dimen>
     <dimen name="localmusic_tab_top">10sp</dimen>
-    <dimen name="margin_localmusic_search_start">250sp</dimen>
+    <dimen name="margin_localmusic_search_start">190sp</dimen>
     <dimen name="margin_localmusic_more_start">20sp</dimen>
     <dimen name="lable_text_size">19sp</dimen>
     <dimen name="margin_localmusic_text_left">30sp</dimen>
@@ -36,8 +38,8 @@
     <dimen name="margin_loop_start">15sp</dimen>
     <dimen name="bar_height">50sp</dimen>
     <dimen name="viewpager_height">200sp</dimen>
-    <dimen name="viewpager_width">450sp</dimen>
-    <dimen name="tablayout_width">300sp</dimen>
+    <dimen name="viewpager_width">380sp</dimen>
+    <dimen name="tablayout_width">232sp</dimen>
     <dimen name="tablayout_height">30sp</dimen>
     <dimen name="margin_top">20sp</dimen>
     <dimen name="margin_top_mid">5sp</dimen>
@@ -49,4 +51,14 @@
     <dimen name="tab_item_width_min">80sp</dimen>
     <dimen name="tab_item_width_max">120sp</dimen>
     <dimen name="zero">0sp</dimen>
+    <dimen name="single_list_song_width">200sp</dimen>
+    <dimen name="single_list_song_height">25sp</dimen>
+    <dimen name="single_list_singer_width">190sp</dimen>
+    <dimen name="single_list_singer_height">15sp</dimen>
+    <dimen name="singe_list_mid_width">270sp</dimen>
+    <dimen name="single_list_option_size">20sp</dimen>
+    <dimen name="single_list_icon_size">10sp</dimen>
+    <dimen name="single_list_icon_top">25sp</dimen>
+    <dimen name="single_list_singer_start">15sp</dimen>
+    <dimen name="single_list_left_width">350sp</dimen>
 </resources>

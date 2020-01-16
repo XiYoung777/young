@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,10 +21,16 @@ import java.util.List;
 public class SingleAdapter extends BaseAdapter {
     private List<Music> mContentList;
     private LayoutInflater mInflater;
+    private SingleCallback mCallback;
 
-    public SingleAdapter(Context context, List<Music> contentList) {
+    public interface SingleCallback {
+        public void itemClick(View v,int position, View headIcon);
+    }
+
+    public SingleAdapter(Context context, List<Music> contentList, SingleCallback callback) {
         mContentList = contentList;
         mInflater = LayoutInflater.from(context);
+        mCallback = callback;
     }
 
     @Override
@@ -56,6 +64,7 @@ public class SingleAdapter extends BaseAdapter {
             viewHolder.mCheckImageView = view.findViewById(R.id.list_item_check);
             viewHolder.mSingerViewTel = view.findViewById(R.id.list_item_singer);
             viewHolder.mOptionViewTel = view.findViewById(R.id.list_item_option);
+            viewHolder.mHeadIcon = view.findViewById(R.id.single_list_head_icon);
             view.setTag(viewHolder);
         } else {
             view = convertView;
@@ -66,12 +75,12 @@ public class SingleAdapter extends BaseAdapter {
         viewHolder.mCheckImageView.setImageResource(R.drawable.icon_bar_voice);
         viewHolder.mSingerViewTel.setText(item.getmSinger());
         viewHolder.mOptionViewTel.setImageResource(R.drawable.toolbar_more);
-        /*viewHolder.mOptionViewTel.setOnClickListener(new View.OnClickListener() {
+        viewHolder.mOptionViewTel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCallback.click(v, position, viewHolder.mVhSpinner);
+                mCallback.itemClick(v, position, viewHolder.mHeadIcon);
             }
-        });*/
+        });
         return view;
     }
 
@@ -81,5 +90,6 @@ public class SingleAdapter extends BaseAdapter {
         private ImageView mCheckImageView;
         private TextView mSingerViewTel;
         private ImageView mOptionViewTel;
+        private RelativeLayout mHeadIcon;
     }
 }

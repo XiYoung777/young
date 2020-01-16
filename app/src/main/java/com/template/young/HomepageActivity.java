@@ -31,6 +31,7 @@ import com.template.young.fragment.FragmentMine;
 import com.template.young.fragment.FragmentPlaybar;
 import com.template.young.fragment.FragmentVideo;
 import com.template.young.fragment.FragmentYoung;
+import com.template.young.model.MyApplication;
 import com.template.young.service.MusicService;
 import com.template.young.util.DatabaseHelper;
 
@@ -53,7 +54,6 @@ public class HomepageActivity extends AppCompatActivity {
                 case 1:
                     loopView(msg.obj);
                     break;
-
             }
         }
     };
@@ -62,6 +62,8 @@ public class HomepageActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBinder = (MusicService.MyBinder) service;
+            MyApplication application = (MyApplication) getApplicationContext();
+            application.setmBinder(mBinder);
             //动态加载fragment
             dynamicLoadingPlaybar();
         }
@@ -88,7 +90,7 @@ public class HomepageActivity extends AppCompatActivity {
     private void dynamicLoadingPlaybar() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.homepage_drawerlayout, new FragmentPlaybar(mBinder));
-        transaction.commit();
+        int commit = transaction.commit();
     }
 
     private void loopView(Object obj) {
@@ -103,20 +105,35 @@ public class HomepageActivity extends AppCompatActivity {
     private void initDB() {
         mDbHelper = new DatabaseHelper(mContext);
         mDb = mDbHelper.getWritableDatabase();
-        //加点测试数据
-        initTestData();
-    }
 
-    private void initTestData() {
-        SQLiteDatabase db = mDbHelper.getWritableDatabase();
-        ContentValues values = new ContentValues();
-        for (int i = 0; i < 5; i++) {
-            values.put(DbConstant.MUSIC_COLUMN_SINGER, "张杰");
-            values.put(DbConstant.MUSIC_COLUMN_SONG, "music_aisi");
-            values.put(DbConstant.MUSIC_COLUMN_SPECIAL, "海贼王");
-            values.put(DbConstant.MUSIC_COLUMN_FOLDER, "母鸡");
-            db.insert(DbConstant.TABLE_NAME, null, values);
-        }
+        ContentValues values1 = new ContentValues();
+        values1.put(DbConstant.MUSIC_COLUMN_SINGER, "隔壁老樊");
+        values1.put(DbConstant.MUSIC_COLUMN_SONG, "四块五");
+        values1.put(DbConstant.MUSIC_COLUMN_SPECIAL, "四块五");
+        values1.put(DbConstant.MUSIC_COLUMN_FOLDER, "/sdcard/Music/四块五 - 隔壁老樊.mp3");
+        mDb.insert(DbConstant.TABLE_NAME, null, values1);
+
+        ContentValues values2 = new ContentValues();
+        values2.put(DbConstant.MUSIC_COLUMN_SINGER, "王胜");
+        values2.put(DbConstant.MUSIC_COLUMN_SONG, "情深深雨蒙蒙");
+        values2.put(DbConstant.MUSIC_COLUMN_SPECIAL, "新专辑");
+        values2.put(DbConstant.MUSIC_COLUMN_FOLDER, "/sdcard/Music/hello.mp3");
+        mDb.insert(DbConstant.TABLE_NAME, null, values2);
+
+        ContentValues values3 = new ContentValues();
+        values3.put(DbConstant.MUSIC_COLUMN_SINGER, "杨胖雨");
+        values3.put(DbConstant.MUSIC_COLUMN_SONG, "情深深雨濛濛");
+        values3.put(DbConstant.MUSIC_COLUMN_SPECIAL, "新专辑");
+        values3.put(DbConstant.MUSIC_COLUMN_FOLDER, "情深深雨濛濛 - 杨胖雨.mp3");
+        mDb.insert(DbConstant.TABLE_NAME, null, values3);
+
+
+        ContentValues values4 = new ContentValues();
+        values4.put(DbConstant.MUSIC_COLUMN_SINGER, "一棵小葱");
+        values4.put(DbConstant.MUSIC_COLUMN_SONG, "青花瓷 (戏曲版) (Live)");
+        values4.put(DbConstant.MUSIC_COLUMN_SPECIAL, "Live");
+        values4.put(DbConstant.MUSIC_COLUMN_FOLDER, "/sdcard/Music/青花瓷 (戏曲版) (Live) - 一棵小葱.mp3");
+        mDb.insert(DbConstant.TABLE_NAME, null, values4);
     }
 
     private void initLooperViewpager() {
