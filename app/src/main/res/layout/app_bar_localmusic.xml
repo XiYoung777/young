@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bar_height">
+
+        <ImageView
+            android:id="@+id/localmusic_back"
+            android:layout_width="@dimen/toolbar_item_size"
+            android:layout_height="@dimen/toolbar_item_size"
+            android:background="@drawable/toolbar_back" />
+
+        <TextView
+            style="@style/ToolBarTextStyle"
+            android:layout_width="@dimen/toolbar_localmusic_textwidth"
+            android:layout_height="@dimen/toolbar_item_size"
+            android:layout_marginStart="@dimen/margin_localmusic_text_left"
+            android:text="@string/local_music" />
+
+        <ImageView
+            android:layout_width="@dimen/toolbar_item_size"
+            android:layout_height="@dimen/toolbar_item_size"
+            android:layout_marginStart="@dimen/margin_localmusic_search_start"
+            android:background="@drawable/toolbar_search" />
+
+        <ImageView
+            android:id="@+id/localmusic_more"
+            android:layout_width="@dimen/toolbar_item_size"
+            android:layout_height="@dimen/toolbar_item_size"
+            android:layout_marginStart="@dimen/margin_localmusic_more_start"
+            android:background="@drawable/toolbar_more" />
+    </Toolbar>
+
+    <fragment
+        android:id="@+id/localmusic_content"
+        android:name="com.template.young.fragment.FragmentContentLocalMusic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

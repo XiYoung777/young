@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <ImageView
+        android:visibility="invisible"
+        android:id="@+id/list_item_voice"
+        android:scaleType="center"
+        android:src="@drawable/icon_bar_voice"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/list_item_song"
+            android:ellipsize="end"
+            android:maxLines="@integer/one"
+            style="@style/PlayBarSongTextStyle"
+            android:layout_width="@dimen/list_text_width"
+            android:layout_height="@dimen/playbar_text_big_height"
+            android:text="@string/test_data" />
+
+        <ImageView
+            android:id="@+id/list_item_check"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/list_item_singer"
+            android:ellipsize="end"
+            android:maxLines="@integer/one"
+            style="@style/PlayBarSingerTextStyle"
+            android:layout_width="@dimen/list_text_width"
+            android:layout_height="@dimen/playbar_text_small_height"
+            android:layout_marginTop="@dimen/playbar_text_margin_top"
+            android:text="@string/test_data" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/list_item_option"
+        android:scaleType="fitXY"
+        android:src="@drawable/toolbar_more"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>

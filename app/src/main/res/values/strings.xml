@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">young</string>
+
+    <integer name="one">1</integer>
+    <integer name="two">2</integer>
+    <integer name="three">3</integer>
+    <integer name="four">4</integer>
+    <integer name="five">5</integer>
+    <integer name="six">6</integer>
+    <integer name="seven">7</integer>
+    <integer name="eight">8</integer>
+    <integer name="nine">9</integer>
+
+    <string name="tab_mine">我的</string>
+    <string name="tab_discover">发现</string>
+    <string name="tab_young">young</string>
+    <string name="tab_video">视频</string>
+    <string name="recommend_calender">每日推荐</string>
+    <string name="recommend_live">直播</string>
+    <string name="recommend_station">电台</string>
+    <string name="recommend_rank">排行榜</string>
+    <string name="recommend_songlist">歌单</string>
+    <string name="template_name">Young Man</string>
+    <string name="local_music">本地音乐</string>
+    <string name="add">添加</string>
+    <string name="remove">删除</string>
+    <string name="test_data">测试数据</string>
+</resources>

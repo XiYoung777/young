@@ -1,0 +1,25 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="ToolBarTextStyle">
+        <item name="android:textSize">@dimen/lable_text_size</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="PlayBarSongTextStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">@dimen/playbar_text_big_size</item>
+    </style>
+
+    <style name="PlayBarSingerTextStyle">
+        <item name="android:textSize">@dimen/playbar_text_small_size</item>
+    </style>
+
+</resources>
