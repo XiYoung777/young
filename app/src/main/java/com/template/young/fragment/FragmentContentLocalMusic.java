@@ -1,5 +1,6 @@
 package com.template.young.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,9 +25,11 @@ public class FragmentContentLocalMusic extends Fragment {
     private TabLayout mTabLayout;
     private MusicService.MyBinder mBinder;
     private FragmentSingle mFragmentSingle;
+    private Context mContext;
 
-    public FragmentContentLocalMusic(MusicService.MyBinder mBinder) {
+    public FragmentContentLocalMusic(MusicService.MyBinder mBinder, Context mContext) {
         this.mBinder = mBinder;
+        this.mContext = mContext;
     }
 
     @Nullable
@@ -41,7 +44,7 @@ public class FragmentContentLocalMusic extends Fragment {
     }
 
     private void initFragment() {
-        mFragmentSingle = new FragmentSingle(mBinder);
+        mFragmentSingle = new FragmentSingle(mBinder, mContext);
         mFragmentList.add(mFragmentSingle);
         mFragmentList.add(new FragmentSinger());
         mFragmentList.add(new FragmentSpecial());

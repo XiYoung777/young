@@ -8,29 +8,32 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.content.ComponentName;
-import android.content.ContentValues;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
+import android.provider.MediaStore;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.android.material.tabs.TabLayout;
 import com.template.young.Adapter.HomepageViewPagerAdapter;
-import com.template.young.Constant.DbConstant;
+import com.template.young.Constant.MessageOrder;
 import com.template.young.fragment.FragmentDiscover;
 import com.template.young.fragment.FragmentMine;
 import com.template.young.fragment.FragmentPlaybar;
 import com.template.young.fragment.FragmentVideo;
 import com.template.young.fragment.FragmentYoung;
+import com.template.young.model.Music;
 import com.template.young.model.MyApplication;
 import com.template.young.service.MusicService;
 import com.template.young.util.DatabaseHelper;
@@ -39,6 +42,7 @@ import java.util.ArrayList;
 
 public class HomepageActivity extends AppCompatActivity {
 
+    private LinearLayout mMusicPlayBar;
     private DatabaseHelper mDbHelper;
     private Context mContext = this;
     private SQLiteDatabase mDb;
@@ -47,6 +51,8 @@ public class HomepageActivity extends AppCompatActivity {
     private ViewPager mViewPager;
     private DrawerLayout mDrawerLayout;
     private MusicService.MyBinder mBinder;
+    private MyApplication mApplication;
+    private ArrayList<Music> mMusicList = new ArrayList<>();
     private Handler mHandler = new Handler() {
         @Override
         public void handleMessage(@NonNull Message msg) {
@@ -62,9 +68,8 @@ public class HomepageActivity extends AppCompatActivity {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
             mBinder = (MusicService.MyBinder) service;
-            MyApplication application = (MyApplication) getApplicationContext();
-            application.setmBinder(mBinder);
-            //动态加载fragment
+            mApplication.setmBinder(mBinder);
+            //动态加载playbar
             dynamicLoadingPlaybar();
         }
 
@@ -89,10 +94,48 @@ public class HomepageActivity extends AppCompatActivity {
 
     private void dynamicLoadingPlaybar() {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.homepage_drawerlayout, new FragmentPlaybar(mBinder));
+        FragmentPlaybar fragmentPlaybar = new FragmentPlaybar(mBinder, mContext);
+        transaction.replace(R.id.homepage_drawerlayout, fragmentPlaybar);
         int commit = transaction.commit();
+        //初始化service里的歌单
+        initServiceMusicList();
     }
 
+    /**
+     * 初始化service中的歌单
+     */
+    private void initServiceMusicList() {
+        ContentResolver contentResolver = getContentResolver();
+        Cursor cursor = contentResolver.query(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, null, null, null, MediaStore.Audio.Media.DEFAULT_SORT_ORDER);
+        if (cursor.moveToFirst()) {
+            do {
+                int columnIdIndex = cursor.getColumnIndex(MediaStore.Audio.Media._ID);
+                int columnSingerIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ARTIST);
+                int columnSongIndex = cursor.getColumnIndex(MediaStore.Audio.Media.TITLE);
+                int columnSpecialIndex = cursor.getColumnIndex(MediaStore.Audio.Media.ALBUM);
+                int columnFolderIndex = cursor.getColumnIndex(MediaStore.Audio.Media.DATA);
+                int id = cursor.getInt(columnIdIndex);
+//                mIndexList.add(id);
+                String singer = cursor.getString(columnSingerIndex);
+                String song = cursor.getString(columnSongIndex);
+                String special = cursor.getString(columnSpecialIndex);
+                String folder = cursor.getString(columnFolderIndex);
+                mMusicList.add(new Music(singer, song, special, folder));
+            } while (cursor.moveToNext());
+        }
+        mBinder.setMusic(mMusicList.get(0).getmFolder());
+        mApplication.setmMusicList(mMusicList);
+
+
+        mApplication.getmHandler().sendEmptyMessage(MessageOrder.OBTAIN_MUSICLIST);
+        mApplication.getmHandler().sendEmptyMessage(MessageOrder.SAVE_HOMEPAGE_BAR);
+        mApplication.getmHandler().sendEmptyMessage(MessageOrder.LOAD_HOMEPAGE_PLAYBAR);
+    }
+
+    /**
+     * 轮播图轮询方法
+     * @param obj
+     */
     private void loopView(Object obj) {
         ViewPager viewPager = (ViewPager) obj;
         int position = viewPager.getCurrentItem() + 1;
@@ -102,57 +145,12 @@ public class HomepageActivity extends AppCompatActivity {
         viewPager.setCurrentItem(position);
     }
 
+    /**
+     * 创建数据库
+     */
     private void initDB() {
         mDbHelper = new DatabaseHelper(mContext);
         mDb = mDbHelper.getWritableDatabase();
-
-        ContentValues values1 = new ContentValues();
-        values1.put(DbConstant.MUSIC_COLUMN_SINGER, "隔壁老樊");
-        values1.put(DbConstant.MUSIC_COLUMN_SONG, "四块五");
-        values1.put(DbConstant.MUSIC_COLUMN_SPECIAL, "四块五");
-        values1.put(DbConstant.MUSIC_COLUMN_FOLDER, "/sdcard/Music/四块五 - 隔壁老樊.mp3");
-        mDb.insert(DbConstant.TABLE_NAME, null, values1);
-
-        ContentValues values2 = new ContentValues();
-        values2.put(DbConstant.MUSIC_COLUMN_SINGER, "王胜");
-        values2.put(DbConstant.MUSIC_COLUMN_SONG, "情深深雨蒙蒙");
-        values2.put(DbConstant.MUSIC_COLUMN_SPECIAL, "新专辑");
-        values2.put(DbConstant.MUSIC_COLUMN_FOLDER, "/sdcard/Music/hello.mp3");
-        mDb.insert(DbConstant.TABLE_NAME, null, values2);
-
-        ContentValues values3 = new ContentValues();
-        values3.put(DbConstant.MUSIC_COLUMN_SINGER, "杨胖雨");
-        values3.put(DbConstant.MUSIC_COLUMN_SONG, "情深深雨濛濛");
-        values3.put(DbConstant.MUSIC_COLUMN_SPECIAL, "新专辑");
-        values3.put(DbConstant.MUSIC_COLUMN_FOLDER, "情深深雨濛濛 - 杨胖雨.mp3");
-        mDb.insert(DbConstant.TABLE_NAME, null, values3);
-
-
-        ContentValues values4 = new ContentValues();
-        values4.put(DbConstant.MUSIC_COLUMN_SINGER, "一棵小葱");
-        values4.put(DbConstant.MUSIC_COLUMN_SONG, "青花瓷 (戏曲版) (Live)");
-        values4.put(DbConstant.MUSIC_COLUMN_SPECIAL, "Live");
-        values4.put(DbConstant.MUSIC_COLUMN_FOLDER, "/sdcard/Music/青花瓷 (戏曲版) (Live) - 一棵小葱.mp3");
-        mDb.insert(DbConstant.TABLE_NAME, null, values4);
-    }
-
-    private void initLooperViewpager() {
-        ArrayList<ImageView> imageViewList = new ArrayList<>();
-        int[] imageId = new int[]{
-                R.drawable.poster_first,
-                R.drawable.poster_second,
-                R.drawable.poster_third,
-                R.drawable.poster_fourth,
-                R.drawable.poster_fifth,
-                R.drawable.poster_sixth,
-                R.drawable.poster_seventh,
-                R.drawable.poster_eighth,
-                R.drawable.poster_ninth
-        };
-        for (int i = 0; i < imageId.length; i++) {
-            ImageView imageView = new ImageView(this);
-
-        }
 
     }
 
@@ -168,6 +166,9 @@ public class HomepageActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * 初始化主页的四个视图
+     */
     private void initViewPager() {
         mViewPager = (ViewPager) findViewById(R.id.homepage_viewpager);
         mTabLayout = (TabLayout) findViewById(R.id.homepage_tablayout);
@@ -177,6 +178,9 @@ public class HomepageActivity extends AppCompatActivity {
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
+    /**
+     * 初始化主页的四个视图的Fragment
+     */
     private void initFragment() {
         mFragmentList = new ArrayList<>();
         FragmentMine fragmentMine = new FragmentMine();
@@ -191,6 +195,28 @@ public class HomepageActivity extends AppCompatActivity {
         initViewPager();
         //绑定按钮的单击事件
         initButtonClick();
+        //给playbar绑定单击事件
+//        initClickOnPlayBar();
     }
 
+    private void initClickOnPlayBar() {
+        mMusicPlayBar = findViewById(R.id.playbar);
+        mMusicPlayBar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intentMusicDetail = new Intent(mContext, MusicDetailActivity.class);
+                startActivity(intentMusicDetail);
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mApplication = (MyApplication) getApplicationContext();
+        if (!mApplication.ismHomepageFirstStart()) {
+            mApplication.getmHandler().sendEmptyMessage(MessageOrder.LOAD_HOMEPAGE_PLAYBAR);
+        }
+        mApplication.setmHomepageFirstStart(false);
+    }
 }

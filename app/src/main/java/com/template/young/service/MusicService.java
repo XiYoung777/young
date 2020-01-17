@@ -16,10 +16,10 @@ import androidx.annotation.Nullable;
 import com.template.young.Constant.DbConstant;
 import com.template.young.R;
 import com.template.young.model.Music;
-import com.template.young.util.DatabaseHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An {@link IntentService} subclass for handling asynchronous task requests in
@@ -30,6 +30,8 @@ import java.util.ArrayList;
  */
 public class MusicService extends Service {
 
+    private List<Integer> mIndexList = new ArrayList<>();
+    private int mCurrentPosition = 0;
     private Context mContext = this;
     private ArrayList<Music> mMusicList;
     private SQLiteDatabase mDb;
@@ -42,18 +44,6 @@ public class MusicService extends Service {
     @Override
     public void onCreate() {
         mMediaPlayer = MediaPlayer.create(mContext, Uri.parse(DbConstant.PATH + R.raw.music_aisi));
-    }
-
-    private void addMusic(Music music) {
-        if (!mMusicList.contains(music)) {
-            ContentValues values = new ContentValues();
-            values.put(DbConstant.MUSIC_COLUMN_SINGER, music.getmSinger());
-            values.put(DbConstant.MUSIC_COLUMN_SONG, music.getmSong());
-            values.put(DbConstant.MUSIC_COLUMN_SPECIAL, music.getmSpecial());
-            values.put(DbConstant.MUSIC_COLUMN_FOLDER, music.getmFolder());
-            mDb.insert(DatabaseHelper.TABLE_MUSIC, null, values);
-        }
-        mBinder.playMusic();
     }
 
     @Nullable
@@ -83,21 +73,8 @@ public class MusicService extends Service {
         /**
          * 设置音乐
          *
-         * @param musicId
+         * @param path
          */
-        public void setMusic(int musicId) {
-            if (mMediaPlayer.isPlaying()) {
-                mMediaPlayer.stop();
-            }
-            try {
-                mMediaPlayer.reset();
-                mMediaPlayer.setDataSource(mContext, Uri.parse(DbConstant.PATH + musicId));
-                mMediaPlayer.prepare();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
         public void setMusic(String path) {
             if (mMediaPlayer.isPlaying()) {
                 mMediaPlayer.stop();
@@ -112,17 +89,11 @@ public class MusicService extends Service {
         }
 
         /**
-         * 播放上一曲
+         * 判断是否正在播放
+         * @return
          */
-        public void playLast() {
-
-        }
-
-        /**
-         * 播放下一曲
-         */
-        public void playNext() {
-
+        public boolean isPlaying() {
+            return mMediaPlayer.isPlaying();
         }
     }
 }

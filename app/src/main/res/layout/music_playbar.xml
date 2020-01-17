@@ -3,47 +3,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginTop="@dimen/playbar_margin_top"
-    android:background="@color/gray"
+    android:background="@color/black_background"
     android:orientation="horizontal">
 
-    <RelativeLayout
+    <LinearLayout
+        android:layout_weight="@integer/five"
+        android:id="@+id/playbar"
         android:layout_width="@dimen/zero"
         android:layout_height="match_parent"
-        android:layout_weight="@integer/one">
+        android:clickable="true">
 
-        <ImageView
-            android:id="@+id/playbar_imageview"
-            android:layout_width="@dimen/playbar_imageview_size"
-            android:layout_height="@dimen/playbar_imageview_size"
-            android:layout_centerInParent="true"
-            android:scaleType="fitXY"
-            android:src="@drawable/test" />
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="@integer/one">
 
-    <RelativeLayout
-        android:layout_width="@dimen/zero"
-        android:layout_height="match_parent"
-        android:layout_weight="@integer/three">
+            <ImageView
+                android:id="@+id/playbar_imageview"
+                android:layout_width="@dimen/playbar_imageview_size"
+                android:layout_height="@dimen/playbar_imageview_size"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/test" />
+        </RelativeLayout>
 
-        <TextView
-            android:id="@+id/playbar_song"
-            style="@style/PlayBarSongTextStyle"
-            android:layout_width="@dimen/playbar_text_width"
-            android:layout_height="@dimen/playbar_text_big_height"
-            android:ellipsize="end"
-            android:maxLines="@integer/one"
-            android:text="@string/test_data" />
+        <RelativeLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="@integer/three">
 
-        <TextView
-            android:id="@+id/playbar_singer"
-            style="@style/PlayBarSingerTextStyle"
-            android:layout_width="@dimen/playbar_text_width"
-            android:layout_height="@dimen/playbar_text_small_height"
-            android:layout_marginTop="@dimen/playbar_text_margin_top"
-            android:ellipsize="end"
-            android:maxLines="@integer/one"
-            android:text="@string/test_data" />
-    </RelativeLayout>
+            <TextView
+                android:id="@+id/playbar_song"
+                style="@style/PlayBarSongTextStyle"
+                android:layout_width="@dimen/playbar_text_width"
+                android:layout_height="@dimen/playbar_text_big_height"
+                android:ellipsize="end"
+                android:maxLines="@integer/one"
+                android:text="@string/test_data" />
+
+            <TextView
+                android:id="@+id/playbar_singer"
+                style="@style/PlayBarSingerTextStyle"
+                android:layout_width="@dimen/playbar_text_width"
+                android:layout_height="@dimen/playbar_text_small_height"
+                android:layout_marginTop="@dimen/playbar_text_margin_top"
+                android:ellipsize="end"
+                android:maxLines="@integer/one"
+                android:text="@string/test_data" />
+        </RelativeLayout>
+    </LinearLayout>
+
 
     <RelativeLayout
         android:layout_width="@dimen/zero"
@@ -54,24 +63,23 @@
             android:id="@+id/playbar_last"
             android:layout_width="@dimen/playbar_item_size"
             android:layout_height="@dimen/playbar_item_size"
-            android:layout_marginStart="30sp"
-            android:layout_marginTop="10sp"
+            android:layout_alignTop="@+id/playbar_play_image"
             android:src="@drawable/playbar_last" />
 
         <ImageView
             android:id="@+id/playbar_play_image"
             android:layout_width="@dimen/playbar_item_size"
             android:layout_height="@dimen/playbar_item_size"
-            android:layout_marginStart="70sp"
-            android:layout_marginTop="10sp"
+            android:layout_marginStart="40sp"
+            android:layout_marginTop="@dimen/playbar_item_play"
             android:src="@drawable/playbar_start" />
 
         <ImageView
             android:id="@+id/playbar_next"
             android:layout_width="@dimen/playbar_item_size"
             android:layout_height="@dimen/playbar_item_size"
-            android:layout_marginStart="110sp"
-            android:layout_marginTop="10sp"
+            android:layout_marginStart="80sp"
+            android:layout_alignTop="@+id/playbar_play_image"
             android:src="@drawable/playbar_next" />
     </RelativeLayout>
 </LinearLayout>

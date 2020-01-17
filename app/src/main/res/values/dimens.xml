@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="single_list_pic_size">50sp</dimen>
-    <dimen name="single_list_height">80sp</dimen>
+    <dimen name="single_list_head_size">20sp</dimen>
+    <dimen name="single_list_height">60sp</dimen>
+    <dimen name="single_list_head_width">30sp</dimen>
     <dimen name="playbar_item_size">30sp</dimen>
     <dimen name="playbar_text_big_height">25sp</dimen>
     <dimen name="playbar_text_big_size">18sp</dimen>
@@ -61,4 +62,12 @@
     <dimen name="single_list_icon_top">25sp</dimen>
     <dimen name="single_list_singer_start">15sp</dimen>
     <dimen name="single_list_left_width">350sp</dimen>
+    <dimen name="playbar_item_play">10sp</dimen>
+    <dimen name="music_detail_item_size">30sp</dimen>
+    <dimen name="music_detail_share_start">330sp</dimen>
+    <dimen name="music_detail_share_top">10sp</dimen>
+    <dimen name="music_detail_song_top">10sp</dimen>
+    <dimen name="music_detail_player_height">450sp</dimen>
+    <dimen name="music_detail_toolbar_height">230sp</dimen>
+    <dimen name="music_detail_toolbar_top">500sp</dimen>
 </resources>

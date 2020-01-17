@@ -11,7 +11,7 @@
         <RelativeLayout
             android:id="@+id/single_list_head_icon"
             android:visibility="gone"
-            android:layout_width="@dimen/single_list_height"
+            android:layout_width="@dimen/single_list_head_width"
             android:layout_height="match_parent">
 
             <ImageView
@@ -20,8 +20,8 @@
                 android:id="@+id/list_item_voice"
                 android:scaleType="fitXY"
                 android:src="@drawable/icon_bar_voice"
-                android:layout_width="@dimen/single_list_pic_size"
-                android:layout_height="@dimen/single_list_pic_size"/>
+                android:layout_width="@dimen/single_list_head_size"
+                android:layout_height="@dimen/single_list_head_size"/>
         </RelativeLayout>
 
         <RelativeLayout
