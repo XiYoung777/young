@@ -2,10 +2,10 @@ package com.template.young.service;
 
 import android.app.IntentService;
 import android.app.Service;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.icu.text.SimpleDateFormat;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Binder;
@@ -37,6 +37,7 @@ public class MusicService extends Service {
     private SQLiteDatabase mDb;
     private MediaPlayer mMediaPlayer;
     private MyBinder mBinder = new MyBinder();
+    private SimpleDateFormat mFormat = new SimpleDateFormat("mm:ss");
 
     public MusicService() {
     }
@@ -90,10 +91,35 @@ public class MusicService extends Service {
 
         /**
          * 判断是否正在播放
+         *
          * @return
          */
         public boolean isPlaying() {
             return mMediaPlayer.isPlaying();
+        }
+
+        public String getCurrentTime() {
+            int currentPosition = mMediaPlayer.getCurrentPosition();
+            String time = mFormat.format(currentPosition);
+            return time;
+        }
+
+        public String getTotalTime() {
+            int duration = mMediaPlayer.getDuration();
+            String time = mFormat.format(duration);
+            return time;
+        }
+
+        public int getProgress() {
+            return mMediaPlayer.getCurrentPosition();
+        }
+
+        public int getMaxProgress() {
+            return mMediaPlayer.getDuration();
+        }
+
+        public void setProgress(int progress) {
+            mMediaPlayer.seekTo(progress);
         }
     }
 }

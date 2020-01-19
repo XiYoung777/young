@@ -80,7 +80,8 @@ public class SingleAdapter extends BaseAdapter {
                 mCallback.itemClick(v, position, viewHolder.mHeadIcon);
             }
         });
-        viewHolder.mHeadIcon.setVisibility(Integer.parseInt(viewHolder.mHeadIcon.getContentDescription().toString()));
+//        viewHolder.mHeadIcon.setVisibility(Integer.parseInt(viewHolder.mHeadIcon.getContentDescription().toString()));
+        viewHolder.mHeadIcon.setVisibility(View.GONE);
         return view;
     }
 

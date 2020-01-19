@@ -70,4 +70,13 @@
     <dimen name="music_detail_player_height">450sp</dimen>
     <dimen name="music_detail_toolbar_height">230sp</dimen>
     <dimen name="music_detail_toolbar_top">500sp</dimen>
+    <dimen name="music_detail_start_size">50sp</dimen>
+    <dimen name="music_detail_progress_top">20sp</dimen>
+    <dimen name="music_detail_progress_total_start">360sp</dimen>
+    <dimen name="music_detail_seekbar_start">50sp</dimen>
+    <dimen name="music_detail_progress_width">50sp</dimen>
+    <dimen name="music_detail_progress_height">15sp</dimen>
+    <dimen name="music_detail_progress_seekbar_width">310sp</dimen>
+    <dimen name="music_detail_seekbar_height">2sp</dimen>
+    <dimen name="music_detail_seekbar_progress_height">2sp</dimen>
 </resources>

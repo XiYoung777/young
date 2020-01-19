@@ -22,4 +22,13 @@
         <item name="android:textSize">@dimen/playbar_text_small_size</item>
     </style>
 
+    <style name="MusicDetailSongTextStyle">
+        <item name="android:textSize">@dimen/playbar_text_big_size</item>
+    </style>
+
+    <style name="MusicDetailSingerTextStyle">
+        <item name="android:textSize">@dimen/playbar_text_small_size</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
 </resources>

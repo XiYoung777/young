@@ -38,28 +38,30 @@
             android:layout_weight="@integer/four">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/music_detail_song"
+                    style="@style/MusicDetailSongTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/zero"
                     android:layout_marginTop="@dimen/music_detail_song_top"
                     android:layout_weight="@integer/three"
+                    android:text="@string/test_data"
                     android:textAlignment="center"
-                    android:id="@+id/music_detail_song"
-                    style="@style/PlayBarSongTextStyle"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/zero"
-                    android:text="@string/test_data" />
+                    android:textColor="@color/white" />
 
                 <TextView
-                    android:layout_weight="@integer/two"
-                    android:textAlignment="center"
                     android:id="@+id/music_detail_singer"
-                    style="@style/PlayBarSingerTextStyle"
+                    style="@style/MusicDetailSingerTextStyle"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/zero"
-                    android:text="@string/test_data" />
+                    android:layout_weight="@integer/two"
+                    android:text="@string/test_data"
+                    android:textAlignment="center"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
         </RelativeLayout>
@@ -80,17 +82,154 @@
     </LinearLayout>
 
     <RelativeLayout
-        android:layout_marginTop="@dimen/bar_height"
-        android:background="@color/colorAccent"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/music_detail_player_height">
+        android:layout_height="@dimen/music_detail_player_height"
+        android:layout_marginTop="@dimen/bar_height">
+
+        <com.template.young.util.CircleImageView
+            android:id="@+id/music_detail_disc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:scaleType="fitXY" />
     </RelativeLayout>
 
     <LinearLayout
-        android:background="@color/black"
-        android:layout_marginTop="@dimen/music_detail_toolbar_top"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/music_detail_toolbar_height">
+        android:layout_height="@dimen/music_detail_toolbar_height"
+        android:layout_marginTop="@dimen/music_detail_toolbar_top"
+        android:orientation="vertical">
+
+        //商务功能
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="@integer/one"></LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="@integer/one">
+
+            <TextView
+                android:id="@+id/music_detail_time_progress"
+                style="@style/MusicDetailSingerTextStyle"
+                android:layout_width="@dimen/music_detail_progress_width"
+                android:layout_height="@dimen/music_detail_progress_height"
+                android:layout_marginTop="@dimen/music_detail_progress_top"
+                android:text="@string/test_data"
+                android:textColor="@color/deep_gray"/>
+
+            <SeekBar
+                android:id="@+id/music_detail_seekbar"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="@dimen/music_detail_progress_seekbar_width"
+                android:layout_height="@dimen/music_detail_progress_height"
+                android:layout_marginStart="@dimen/music_detail_seekbar_start"
+                android:layout_marginTop="@dimen/music_detail_progress_top"
+                android:maxHeight="@dimen/music_detail_seekbar_progress_height"
+                android:minHeight="2sp"
+                android:progressDrawable="@drawable/music_detail_seekbar" />
+
+            <TextView
+                android:id="@+id/music_detail_time_total"
+                style="@style/MusicDetailSingerTextStyle"
+                android:layout_width="@dimen/music_detail_progress_width"
+                android:layout_height="@dimen/music_detail_progress_height"
+                android:layout_marginStart="@dimen/music_detail_progress_total_start"
+                android:layout_marginTop="@dimen/music_detail_progress_top"
+                android:text="@string/test_data"
+                android:textColor="@color/deep_gray"/>
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="@integer/one"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="@integer/one">
+
+                <ImageView
+                    android:id="@+id/music_detail_play_model"
+                    android:layout_width="@dimen/music_detail_item_size"
+                    android:layout_height="@dimen/music_detail_item_size"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_loop" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="@integer/one">
+
+                <ImageView
+                    android:id="@+id/music_detail_last"
+                    android:layout_width="@dimen/music_detail_item_size"
+                    android:layout_height="@dimen/music_detail_item_size"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_last_white" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="@integer/one">
+
+                <ImageView
+                    android:id="@+id/music_detail_play"
+                    android:layout_width="@dimen/music_detail_start_size"
+                    android:layout_height="@dimen/music_detail_start_size"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_start_white" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="@integer/one">
+
+                <ImageView
+                    android:id="@+id/music_detail_next"
+                    android:layout_width="@dimen/music_detail_item_size"
+                    android:layout_height="@dimen/music_detail_item_size"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_next_white" />
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/zero"
+                android:layout_height="match_parent"
+                android:layout_weight="@integer/one">
+
+                <ImageView
+                    android:layout_width="@dimen/music_detail_item_size"
+                    android:layout_height="@dimen/music_detail_item_size"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_music_list_white" />
+
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/zero"
+            android:layout_weight="@integer/one" />
 
     </LinearLayout>
 
