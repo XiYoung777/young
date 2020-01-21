@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/discover_songlist_recommend_top_height">
+
+        <TextView
+            style="@style/PlayBarSingerTextStyle"
+            android:layout_width="@dimen/discover_songlist_recommend_width"
+            android:layout_height="@dimen/discover_songlist_recommend_small_text_height"
+            android:layout_marginStart="@dimen/discover_songlist_recommend_start"
+            android:text="@string/songlist_recommend" />
+
+        <TextView
+            style="@style/PlayBarSongTextStyle"
+            android:layout_width="@dimen/discover_songlist_recommend_width"
+            android:layout_height="@dimen/discover_songlist_recommend_big_text_height"
+            android:layout_marginStart="@dimen/discover_songlist_recommend_start"
+            android:layout_marginTop="@dimen/discover_songlist_recommend_big_text_top"
+            android:text="@string/choose_carefully_for_you"
+            android:textStyle="bold" />
+
+        <Button
+            android:layout_width="@dimen/discover_songlist_recommend_button_width"
+            android:layout_height="@dimen/discover_songlist_recommend_button_height"
+            android:layout_marginStart="@dimen/discover_songlist_recommend_button_start"
+            android:layout_marginTop="@dimen/discover_songlist_recommend_button_top"
+            android:background="@drawable/button_oval"
+            android:text="@string/view_more"
+            android:textAlignment="center"
+            android:textScaleX="@integer/one" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/discover_songlist_recommend_bottom_height">
+
+
+        <HorizontalScrollView
+            android:scrollbars="none"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/discover_songlist_recommend_bottom_item_width"
+                    android:layout_height="@dimen/discover_songlist_recommend_bottom_item_height">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/music_list_recommend1"
+                        android:scaleType="fitXY"
+                        android:layout_width="@dimen/discover_songlist_recommend_bottom_item_img_width"
+                        android:layout_height="@dimen/discover_songlist_recommend_bottom_item_img_height" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/discover_songlist_recommend_bottom_item_width"
+                    android:layout_height="@dimen/discover_songlist_recommend_bottom_item_height">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/music_list_recommend2"
+                        android:scaleType="fitXY"
+                        android:layout_width="@dimen/discover_songlist_recommend_bottom_item_width"
+                        android:layout_height="@dimen/discover_songlist_recommend_bottom_item_img_height" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/discover_songlist_recommend_bottom_item_width"
+                    android:layout_height="@dimen/discover_songlist_recommend_bottom_item_height">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/music_list_recommend3"
+                        android:scaleType="fitXY"
+                        android:layout_width="@dimen/discover_songlist_recommend_bottom_item_width"
+                        android:layout_height="@dimen/discover_songlist_recommend_bottom_item_img_height" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/discover_songlist_recommend_bottom_item_width"
+                    android:layout_height="@dimen/discover_songlist_recommend_bottom_item_height">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/music_list_recommend4"
+                        android:scaleType="fitXY"
+                        android:layout_width="@dimen/discover_songlist_recommend_bottom_item_width"
+                        android:layout_height="@dimen/discover_songlist_recommend_bottom_item_img_height" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/discover_songlist_recommend_bottom_item_width"
+                    android:layout_height="@dimen/discover_songlist_recommend_bottom_item_height">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/music_list_recommend5"
+                        android:scaleType="fitXY"
+                        android:layout_width="@dimen/discover_songlist_recommend_bottom_item_width"
+                        android:layout_height="@dimen/discover_songlist_recommend_bottom_item_img_height" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/discover_songlist_recommend_bottom_item_width"
+                    android:layout_height="@dimen/discover_songlist_recommend_bottom_item_height">
+
+                    <ImageView
+                        android:layout_centerInParent="true"
+                        android:src="@drawable/music_list_recommend6"
+                        android:scaleType="fitXY"
+                        android:layout_width="@dimen/discover_songlist_recommend_bottom_item_width"
+                        android:layout_height="@dimen/discover_songlist_recommend_bottom_item_img_height" />
+                </RelativeLayout>
+
+            </LinearLayout>
+        </HorizontalScrollView>
+    </RelativeLayout>
+</LinearLayout>

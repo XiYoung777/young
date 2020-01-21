@@ -7,6 +7,7 @@ public class Music {
     private String mSong;
     private String mSpecial;
     private String mFolder;
+    private int mType = 0;
 
     public Music(String mSinger, String mSong, String mSpecial, String mFolder) {
         this.mSinger = mSinger;
@@ -53,5 +54,13 @@ public class Music {
 
     public void setmFolder(String mFolder) {
         this.mFolder = mFolder;
+    }
+
+    public int getmType() {
+        return mType;
+    }
+
+    public void setmType(int mType) {
+        this.mType = mType;
     }
 }

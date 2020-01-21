@@ -2,7 +2,9 @@ package com.template.young;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
@@ -10,25 +12,35 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.template.young.callback.ILrcViewListener;
+import com.template.young.fragment.FragmentMusicDetailLyric;
+import com.template.young.fragment.FragmentPlaybar;
+import com.template.young.model.LrcRow;
 import com.template.young.model.Music;
 import com.template.young.model.MyApplication;
 import com.template.young.service.MusicService;
 import com.template.young.util.CircleImageView;
 import com.template.young.util.ImageFilter;
+import com.template.young.util.LrcView;
+import com.template.young.util.LyricUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.Executor;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.LinkedBlockingDeque;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
 public class MusicDetailActivity extends AppCompatActivity {
 
@@ -46,9 +58,22 @@ public class MusicDetailActivity extends AppCompatActivity {
     private TextView mMusicDetailSinger;
     private TextView mTimeProgress;
     private TextView mTimeTotal;
-    private boolean mIsPlaying = false;
     private SeekBar mMusicProgress;
+    private LinearLayout mMusicLyricFragment;
+
+
+    private List<LrcRow> mLrcRows;
+    private LrcView mLrcView;
+    //更新歌词的频率，每秒更新一次
+    private int mPalyTimerDuration = 1000;
+    //更新歌词的定时器
+    private Timer mTimer;
+    //更新歌词的定时任务
+    private TimerTask mTask;
+
+    private boolean mIsPlaying = false;
     private boolean mIsChanged = false;
+    private Context mContext = this;
 
     private Handler mHandler = new Handler() {
         @Override
@@ -58,17 +83,39 @@ public class MusicDetailActivity extends AppCompatActivity {
                     mMusicProgress.setProgress(mBinder.getProgress());
                     mTimeProgress.setText(mBinder.getCurrentTime());
                     break;
+                case 2:
+                    //获取歌曲播放的位置
+                    final long timePassed = mBinder.getProgress();
+                    //滚动歌词
+                    mLrcView.seekLrcToTime(timePassed);
+                    break;
             }
         }
     };
     private static ExecutorService mThreadPool = Executors.newFixedThreadPool(3);
 
-    private Runnable mRunnable = new Runnable() {
+    private Runnable mRunnableSeekBar = new Runnable() {
         @Override
         public void run() {
             while (mIsPlaying) {
                 mHandler.sendEmptyMessage(1);
+                mHandler.sendEmptyMessage(2);
                 SystemClock.sleep(1000);
+            }
+        }
+    };
+
+    private Runnable mRunnableLyric = new Runnable() {
+        @Override
+        public void run() {
+            //获取当前歌曲名称
+            String song = mMusicList.get(mPosition).getmSong();
+            try {
+                //设置歌词
+                mLrcRows = LyricUtil.requstLrcData(song);
+                mLrcView.setLrc(mLrcRows);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
         }
     };
@@ -90,6 +137,14 @@ public class MusicDetailActivity extends AppCompatActivity {
 
         //设置单击事件
         initClick();
+        
+        //设置歌词
+        drawLyric();
+    }
+
+    private void drawLyric() {
+        //获取歌词
+        mThreadPool.execute(mRunnableLyric);
     }
 
     private void initMusicStart() {
@@ -109,9 +164,10 @@ public class MusicDetailActivity extends AppCompatActivity {
         mMusicProgress.setMax(mBinder.getMaxProgress());
         //设置当前播放状态
         if (mBinder.isPlaying()) {
+            mIsPlaying = true;
             mPlayView.setImageResource(R.drawable.icon_pause_white);
             mMusicDisc.playAnim();
-            mThreadPool.execute(mRunnable);
+            mThreadPool.execute(mRunnableSeekBar);
             mTimeProgress.setText(mBinder.getCurrentTime());
         }
 
@@ -133,12 +189,42 @@ public class MusicDetailActivity extends AppCompatActivity {
         mMusicDetailSong = findViewById(R.id.music_detail_song);
         mMusicDetailSinger = findViewById(R.id.music_detail_singer);
         mMusicProgress = findViewById(R.id.music_detail_seekbar);
+        mMusicLyricFragment = findViewById(R.id.fragment_music_detail_lyric);
+        mLrcView = findViewById(R.id.music_detail_lyric);
     }
 
     /**
      * 初始化单击事件
      */
     private void initClick() {
+        //设置自定义的LrcView上下拖动歌词时监听
+        mLrcView.setListener(new ILrcViewListener() {
+            //当歌词被用户上下拖动的时候回调该方法,从高亮的那一句歌词开始播放
+            public void onLrcSeeked(int newPosition, LrcRow row) {
+                if (mBinder != null) {
+                    mBinder.setProgress((int) row.time);
+                }
+            }
+        });
+
+        //点击歌词关闭歌词页面
+        mLrcView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMusicDisc.setVisibility(View.VISIBLE);
+                mMusicLyricFragment.setVisibility(View.INVISIBLE);
+            }
+        });
+
+
+        //点击唱片弹出歌词页面
+        mMusicDisc.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMusicDisc.setVisibility(View.INVISIBLE);
+                mMusicLyricFragment.setVisibility(View.VISIBLE);
+            }
+        });
 
         //SeekBar的监听事件
         mMusicProgress.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -170,7 +256,9 @@ public class MusicDetailActivity extends AppCompatActivity {
                     mPlayView.setImageResource(R.drawable.icon_pause_white);
                     mBinder.playMusic();
                     mMusicDisc.playAnim();
-                    mThreadPool.execute(mRunnable);
+                    //设置歌词
+                    drawLyric();
+                    mThreadPool.execute(mRunnableSeekBar);
                 } else {
                     mIsPlaying = false;
                     mPlayView.setImageResource(R.drawable.icon_start_white);
@@ -201,6 +289,8 @@ public class MusicDetailActivity extends AppCompatActivity {
                     mPosition = mPosition - 1;
                 }
                 mApplication.setmPosition(mPosition);
+                //设置歌词
+                drawLyric();
                 String path = mMusicList.get(mPosition).getmFolder();
                 mBinder.setMusic(path);
                 mBinder.playMusic();
@@ -221,6 +311,8 @@ public class MusicDetailActivity extends AppCompatActivity {
                     mPosition = mPosition + 1;
                 }
                 mApplication.setmPosition(mPosition);
+                //设置歌词
+                drawLyric();
                 String path = mMusicList.get(mPosition).getmFolder();
                 mBinder.setMusic(path);
                 mBinder.playMusic();

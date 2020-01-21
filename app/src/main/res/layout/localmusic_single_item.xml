@@ -5,60 +5,62 @@
     android:orientation="horizontal">
 
     <LinearLayout
+        android:focusable="false"
+        android:id="@+id/single_item"
         android:layout_width="@dimen/single_list_left_width"
         android:layout_height="match_parent">
 
         <RelativeLayout
             android:id="@+id/single_list_head_icon"
-            android:visibility="gone"
             android:layout_width="@dimen/single_list_head_width"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <ImageView
-                android:focusable="false"
-                android:layout_centerInParent="true"
                 android:id="@+id/list_item_voice"
-                android:scaleType="fitXY"
-                android:src="@drawable/icon_bar_voice"
                 android:layout_width="@dimen/single_list_head_size"
-                android:layout_height="@dimen/single_list_head_size"/>
+                android:layout_height="@dimen/single_list_head_size"
+                android:layout_centerInParent="true"
+                android:focusable="false"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_bar_voice" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:layout_marginStart="@dimen/single_list_icon_size"
             android:layout_width="@dimen/singe_list_mid_width"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/single_list_icon_size">
+
             <TextView
-                android:focusable="false"
                 android:id="@+id/list_item_song"
-                android:ellipsize="end"
-                android:maxLines="@integer/one"
                 style="@style/PlayBarSongTextStyle"
                 android:layout_width="@dimen/single_list_song_width"
                 android:layout_height="@dimen/single_list_song_height"
+                android:ellipsize="end"
+                android:focusable="false"
+                android:maxLines="@integer/one"
                 android:text="@string/test_data" />
 
             <ImageView
-                android:focusable="false"
-                android:layout_marginTop="@dimen/single_list_icon_top"
                 android:id="@+id/list_item_check"
                 android:layout_width="@dimen/single_list_icon_size"
-                android:layout_height="@dimen/single_list_icon_size"/>
+                android:layout_height="@dimen/single_list_icon_size"
+                android:layout_marginTop="@dimen/single_list_icon_top"
+                android:focusable="false" />
 
             <TextView
-                android:focusable="false"
                 android:id="@+id/list_item_singer"
-                android:ellipsize="end"
-                android:maxLines="@integer/one"
                 style="@style/PlayBarSingerTextStyle"
-                android:layout_marginStart="@dimen/single_list_singer_start"
                 android:layout_width="@dimen/single_list_singer_width"
                 android:layout_height="@dimen/single_list_singer_height"
+                android:layout_marginStart="@dimen/single_list_singer_start"
                 android:layout_marginTop="@dimen/single_list_icon_top"
+                android:ellipsize="end"
+                android:focusable="false"
+                android:maxLines="@integer/one"
                 android:text="@string/test_data" />
         </RelativeLayout>
     </LinearLayout>
-
 
 
     <RelativeLayout
@@ -66,13 +68,13 @@
         android:layout_height="match_parent">
 
         <ImageView
-            android:focusable="false"
-            android:layout_centerInParent="true"
             android:id="@+id/list_item_option"
-            android:scaleType="fitXY"
-            android:src="@drawable/toolbar_more"
             android:layout_width="@dimen/single_list_option_size"
-            android:layout_height="@dimen/single_list_option_size"/>
+            android:layout_height="@dimen/single_list_option_size"
+            android:layout_centerInParent="true"
+            android:focusable="false"
+            android:scaleType="fitXY"
+            android:src="@drawable/toolbar_more" />
 
     </RelativeLayout>
 </LinearLayout>

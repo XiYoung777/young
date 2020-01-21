@@ -3,6 +3,8 @@ package com.template.young.model;
 import android.app.Application;
 import android.os.Handler;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.template.young.fragment.FragmentSingle;
 import com.template.young.service.MusicService;
@@ -21,6 +23,7 @@ public class MyApplication extends Application {
     private View mLocalMusicBar;
     private boolean mHomepageFirstStart = true;
     private boolean mLocalMusicFirstStart = true;
+    private RelativeLayout mSingleHeadIcon;
 
     public MusicService.MyBinder getmBinder() {
         return mBinder;
@@ -100,5 +103,13 @@ public class MyApplication extends Application {
 
     public void setmLocalMusicFirstStart(boolean mLocalMusicFirstStart) {
         this.mLocalMusicFirstStart = mLocalMusicFirstStart;
+    }
+
+    public RelativeLayout getmSingleHeadIcon() {
+        return mSingleHeadIcon;
+    }
+
+    public void setmSingleHeadIcon(RelativeLayout mSingleHeadIcon) {
+        this.mSingleHeadIcon = mSingleHeadIcon;
     }
 }

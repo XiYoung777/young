@@ -1,13 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/homepage_navigation_header_background">
+    android:orientation="vertical">
 
-
-    <TextView
-        android:id="@+id/textView"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:layout_height="@dimen/navigation_head_top_height"
+        android:scaleType="fitXY"
+        android:src="@drawable/home_navigation_head" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/navigation_head_mid_height">
+
+        <ImageView
+            android:layout_marginTop="@dimen/navigation_head_portrait_top"
+            android:layout_marginStart="@dimen/navigation_head_portrait_start"
+            android:layout_width="@dimen/navigation_head_portrait_width"
+            android:layout_height="@dimen/navigation_head_portrait_width"
+            android:scaleType="fitXY"
+            android:src="@drawable/home_navigation_user_pic" />
+
+        <TextView
+            android:layout_marginTop="@dimen/navigation_head_nickname_top"
+            android:layout_marginStart="@dimen/navigation_head_nickname_start"
+            android:layout_width="@dimen/navigation_head_nickname_width"
+            android:layout_height="@dimen/navigation_head_nickname_height"
+            android:maxLines="@integer/one"
+            android:ellipsize="end"
+            android:text="@string/test_data" />
+
+        <ImageView
+            android:layout_marginTop="@dimen/navigation_head_sign_top"
+            android:layout_marginStart="@dimen/navigation_head_sign_start"
+            android:layout_width="@dimen/navigation_head_sign_width"
+            android:layout_height="@dimen/navigation_head_sign_height"
+            android:scaleType="fitXY"
+            android:src="@drawable/home_navigation_sign_in" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/navigation_head_mid_height"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="@integer/one">
+
+            <ImageView
+                android:layout_width="@dimen/navigation_head_bottom_item_size"
+                android:layout_height="@dimen/navigation_head_bottom_item_size"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/home_navigation_message" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="@integer/one">
+
+            <ImageView
+                android:layout_width="@dimen/navigation_head_bottom_item_size"
+                android:layout_height="@dimen/navigation_head_bottom_item_size"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/home_navigation_friend" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="@integer/one">
+
+            <ImageView
+                android:layout_width="@dimen/navigation_head_bottom_item_size"
+                android:layout_height="@dimen/navigation_head_bottom_item_size"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/home_navigation_personal_page" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="@dimen/zero"
+            android:layout_height="match_parent"
+            android:layout_weight="@integer/one">
+
+            <ImageView
+                android:layout_width="@dimen/navigation_head_bottom_item_size"
+                android:layout_height="@dimen/navigation_head_bottom_item_size"
+                android:layout_centerInParent="true"
+                android:scaleType="fitXY"
+                android:src="@drawable/home_navigation_personal_wearing" />
+        </RelativeLayout>
+    </LinearLayout>
 </LinearLayout>

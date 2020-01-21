@@ -25,4 +25,25 @@
     <string name="add">添加</string>
     <string name="remove">删除</string>
     <string name="test_data">测试数据</string>
+    <string name="creator_center">创作者中心</string>
+    <string name="listen_and_get_music">听歌识曲</string>
+    <string name="show">演出</string>
+    <string name="shopping_mall">商城</string>
+    <string name="person_around">附近的人</string>
+    <string name="game_recommend">游戏推荐</string>
+    <string name="pocket_music">口袋彩铃</string>
+    <string name="my_order">我的订单</string>
+    <string name="stop_at_time">定时停止播放</string>
+    <string name="scan">扫一扫</string>
+    <string name="music_alarm">音乐闹钟</string>
+    <string name="music_cloud">音乐云盘</string>
+    <string name="listen_without_flow">在线听歌免流量</string>
+    <string name="dicount_coupon">优惠券</string>
+    <string name="teenager_mode">青少年模式</string>
+    <string name="view_more">查看更多</string>
+    <string name="songlist_recommend">推荐歌单</string>
+    <string name="choose_carefully_for_you">为你精挑细选</string>
+    <string name="style_recommend_descreption">你在找的好听华语歌</string>
+    <string name="style_recommend">风格推荐</string>
+    <string name="play_all">▶播放全部</string>
 </resources>

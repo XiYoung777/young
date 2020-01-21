@@ -1,4 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group>
+        <item
+            android:id="@+id/creator_center"
+            android:icon="@drawable/home_navigation_creater_center"
+            android:title="@string/creator_center" />
+    </group>
+    <group>
+        <item
+            android:id="@+id/listen_and_get_music"
+            android:icon="@drawable/home_navigation_listen_and_get_music_message"
+            android:title="@string/listen_and_get_music" />
+        <item
+            android:id="@+id/show"
+            android:icon="@drawable/home_navigation_show"
+            android:title="@string/show" />
+        <item
+            android:id="@+id/shopping_mall"
+            android:icon="@drawable/home_navigation_shopping_mall"
+            android:title="@string/shopping_mall" />
+        <item
+            android:id="@+id/person_around"
+            android:icon="@drawable/home_navigation_person_around"
+            android:title="@string/person_around" />
+        <item
+            android:id="@+id/game_recommend"
+            android:icon="@drawable/home_navigation_game_recommand"
+            android:title="@string/game_recommend" />
+        <item
+            android:id="@+id/pocket_music"
+            android:icon="@drawable/home_navigation_pocket_music"
+            android:title="@string/pocket_music" />
+    </group>
+    <group>
+        <item
+            android:id="@+id/my_order"
+            android:icon="@drawable/home_navigation_my_order"
+            android:title="@string/my_order" />
+        <item
+            android:id="@+id/stop_at_time"
+            android:icon="@drawable/home_navigation_stop_at_setted_time"
+            android:title="@string/stop_at_time" />
+        <item
+            android:id="@+id/scan"
+            android:icon="@drawable/home_navigation_scan"
+            android:title="@string/scan" />
+        <item
+            android:id="@+id/music_alarm"
+            android:icon="@drawable/home_navigation_music_alarm_clock"
+            android:title="@string/music_alarm" />
+        <item
+            android:id="@+id/music_cloud"
+            android:icon="@drawable/home_navigation_music_cloud"
+            android:title="@string/music_cloud" />
+        <item
+            android:id="@+id/listen_without_flow"
+            android:icon="@drawable/home_navigation_listen_music_online_without_flow"
+            android:title="@string/listen_without_flow" />
+        <item
+            android:id="@+id/dicount_coupon"
+            android:icon="@drawable/home_navigation_discount_coupon"
+            android:title="@string/dicount_coupon" />
+        <item
+            android:id="@+id/teenager_mode"
+            android:icon="@drawable/home_navigation_teenager_mode"
+            android:title="@string/teenager_mode" />
+    </group>
 </menu>

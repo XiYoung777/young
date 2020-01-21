@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.tabs.TabLayout;
 import com.template.young.Adapter.HomepageViewPagerAdapter;
 import com.template.young.Constant.MessageOrder;
@@ -42,6 +43,7 @@ import java.util.ArrayList;
 
 public class HomepageActivity extends AppCompatActivity {
 
+    private NavigationView mNavigationView;
     private LinearLayout mMusicPlayBar;
     private DatabaseHelper mDbHelper;
     private Context mContext = this;
@@ -83,6 +85,9 @@ public class HomepageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+
+        mNavigationView = findViewById(R.id.navigation_view);
+        mNavigationView.setItemIconTintList(null);
 
         Intent intent = new Intent(mContext, MusicService.class);
         bindService(intent, mConnection, BIND_AUTO_CREATE);
@@ -160,7 +165,6 @@ public class HomepageActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "我终于找到问题原因了", Toast.LENGTH_LONG).show();
                 mDrawerLayout.openDrawer(Gravity.START);
             }
         });

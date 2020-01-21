@@ -1,5 +1,6 @@
 package com.template.young.fragment;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,7 +19,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 
 import com.template.young.MusicDetailActivity;
 import com.template.young.R;
@@ -39,11 +39,13 @@ public class FragmentPlaybar extends Fragment {
     private ImageView mImageViewLast;
     private ImageView mImageViewPlay;
     private ImageView mImageViewNext;
+    private ImageView mImageViewOption;
     private MusicService.MyBinder mBinder;
     private PlaybarCallbcak mPlayCallback;
     private MyApplication mApplication;
     private boolean mLocalMusicFlag = false;
-    private Context mContext = getContext();
+    private Context mContext;
+    private ContentResolver mResolver;
     private View mView;
     private Handler mHandler = new Handler() {
         @Override
@@ -71,6 +73,7 @@ public class FragmentPlaybar extends Fragment {
     public FragmentPlaybar(MusicService.MyBinder mBinder, Context mContext) {
         this.mBinder = mBinder;
         this.mContext = mContext;
+        mResolver = mContext.getContentResolver();
         mApplication = (MyApplication) mContext.getApplicationContext();
         mApplication.setmHandler(mHandler);
     }
@@ -142,6 +145,7 @@ public class FragmentPlaybar extends Fragment {
             }
         });
 
+        //单击跳转至详情界面
         LinearLayout playbar = view.findViewById(R.id.playbar);
         playbar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,6 +154,8 @@ public class FragmentPlaybar extends Fragment {
                 startActivity(intentMusicDetail);
             }
         });
+
+
     }
 
     private void setPlayBarStart() {
@@ -189,4 +195,6 @@ public class FragmentPlaybar extends Fragment {
 
         setPlayBarPlayImage();
     }
+
+
 }

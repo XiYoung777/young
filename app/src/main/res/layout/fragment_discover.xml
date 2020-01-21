@@ -3,17 +3,39 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include layout="@layout/fragment_discover_viewpager"
-        android:layout_marginStart="@dimen/margin_loop_start"
-        android:layout_height="@dimen/viewpager_height"
-        android:layout_width="@dimen/viewpager_width"></include>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/recommend_function_height">
-        <include layout="@layout/fragment_discover_recommend"/>
-    </LinearLayout>
+        android:layout_height="match_parent">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <include layout="@layout/fragment_discover_viewpager"
+                android:layout_marginStart="@dimen/margin_loop_start"
+                android:layout_height="@dimen/viewpager_height"
+                android:layout_width="@dimen/viewpager_width"></include>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/recommend_function_height">
+                <include layout="@layout/fragment_discover_recommend"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/discover_songlist_recommend_height">
+                <include layout="@layout/fragment_discover_songlist_recommend"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <include layout="@layout/fragment_discover_style_recommend"/>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 
 
 </LinearLayout>

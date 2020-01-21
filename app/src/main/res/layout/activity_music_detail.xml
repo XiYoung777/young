@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/music_detail_framelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/blue"
     tools:context=".MusicDetailActivity">
 
     <ImageView
@@ -94,6 +96,8 @@
             android:scaleType="fitXY" />
     </RelativeLayout>
 
+    <include layout="@layout/music_detail_lyric"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/music_detail_toolbar_height"
@@ -130,7 +134,7 @@
                 android:layout_marginStart="@dimen/music_detail_seekbar_start"
                 android:layout_marginTop="@dimen/music_detail_progress_top"
                 android:maxHeight="@dimen/music_detail_seekbar_progress_height"
-                android:minHeight="2sp"
+                android:minHeight="@dimen/music_detail_seekbar_progress_height"
                 android:progressDrawable="@drawable/music_detail_seekbar" />
 
             <TextView

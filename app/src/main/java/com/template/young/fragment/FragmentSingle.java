@@ -10,15 +10,15 @@ import android.media.MediaMetadataRetriever;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 
 import com.template.young.Adapter.SingleAdapter;
@@ -46,6 +46,8 @@ public class FragmentSingle extends Fragment implements SingleAdapter.SingleCall
     private Context mContext;
     private boolean mFlag = true;
     private View mPlayBar;
+    private View mView;
+    private int mFirstPosition;
 
     public FragmentSingle(MusicService.MyBinder mBinder, Context mContext) {
         this.mBinder = mBinder;
@@ -58,6 +60,7 @@ public class FragmentSingle extends Fragment implements SingleAdapter.SingleCall
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.localmusic_single, container, false);
+        mView = view;
         if (mFlag) {
             initList();
         }
@@ -69,44 +72,7 @@ public class FragmentSingle extends Fragment implements SingleAdapter.SingleCall
 
     private void initAdapter(View view) {
         mListView = view.findViewById(R.id.single_list);
-        mListView.setAdapter(new SingleAdapter(getContext(), mMusicList,this));
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mLastPosition = mApplication.getmPosition();
-                mCurrentPosition = position;
-                mApplication.setmPosition(mCurrentPosition);
-                if (mLastPosition == -1) {
-                    //更改图标样式
-                    setHeadIcon(mCurrentPosition, View.VISIBLE);
-
-                    mLastPosition = mCurrentPosition;
-                    Music music = mMusicList.get(mCurrentPosition);
-                    String path = music.getmFolder();
-                    //设置新音乐
-                    mBinder.setMusic(path);
-                    //播放音乐
-                    mBinder.playMusic();
-                } else {
-                    if (mCurrentPosition == mLastPosition) {
-                        mBinder.playMusic();
-                    } else {
-                        //更改图标样式
-                        setHeadIcon(mLastPosition, View.GONE);
-                        setHeadIcon(mCurrentPosition - mListView.getFirstVisiblePosition(), View.VISIBLE);
-                        setPlaybarData(mCurrentPosition, mPlayBar);
-
-                        mLastPosition = mCurrentPosition;
-                        Music music = mMusicList.get(mCurrentPosition);
-                        String path = music.getmFolder();
-                        //设置新音乐
-                        mBinder.setMusic(path);
-                        //播放音乐
-                        mBinder.playMusic();
-                    }
-                }
-            }
-        });
+        mListView.setAdapter(new SingleAdapter(getContext(), mMusicList, this, mIndexList));
     }
 
     /**
@@ -119,6 +85,7 @@ public class FragmentSingle extends Fragment implements SingleAdapter.SingleCall
 
     /**
      * 设置ListView的head是否隐藏
+     *
      * @param position
      * @param gone
      */
@@ -159,6 +126,11 @@ public class FragmentSingle extends Fragment implements SingleAdapter.SingleCall
     public void itemClick(View v, int position, View headIcon) {
         mCurrentPosition = position;
         mHeadIcon = headIcon;
+        switch (v.getId()) {
+            case R.id.list_item_option:
+                showPopupMenu(v);
+                break;
+        }
     }
 
     @Override
@@ -195,6 +167,7 @@ public class FragmentSingle extends Fragment implements SingleAdapter.SingleCall
 
     /**
      * 更新playbar的信息
+     *
      * @param position
      * @param view
      */
@@ -202,7 +175,7 @@ public class FragmentSingle extends Fragment implements SingleAdapter.SingleCall
         ImageView playBarImage = view.findViewById(R.id.playbar_imageview);
         String mediaUri = mMusicList.get(position).getmFolder();
 
-        MediaMetadataRetriever mediaMetadataRetriever=new MediaMetadataRetriever();
+        MediaMetadataRetriever mediaMetadataRetriever = new MediaMetadataRetriever();
         mediaMetadataRetriever.setDataSource(mediaUri);
         byte[] picture = mediaMetadataRetriever.getEmbeddedPicture();
         if (picture != null) {
@@ -215,5 +188,60 @@ public class FragmentSingle extends Fragment implements SingleAdapter.SingleCall
 
         TextView playBarSonger = view.findViewById(R.id.playbar_song);
         playBarSonger.setText(mMusicList.get(position).getmSong());
+    }
+
+    /**
+     * 设置下拉菜单
+     *
+     * @param view
+     */
+    private void showPopupMenu(View view) {
+        // View当前PopupMenu显示的相对View的位置
+        PopupMenu popupMenu = new PopupMenu(mContext, view);
+        // menu布局
+        popupMenu.getMenuInflater().inflate(R.menu.menu_single_jtem_option, popupMenu.getMenu());
+        // menu的item点击事件
+        popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.single_item_option_remove:
+                        //删除单曲
+                        removeSingle();
+                        break;
+                }
+                return false;
+            }
+        });
+        // PopupMenu关闭事件
+//        popupMenu.setOnDismissListener(new PopupMenu.OnDismissListener() {
+//            @Override
+//            public void onDismiss(PopupMenu menu) {
+//                Toast.makeText(mContext, "关闭PopupMenu", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+
+        popupMenu.show();
+    }
+
+    /**
+     * 删除单曲
+     */
+    private void removeSingle() {
+        mFirstPosition = mListView.getFirstVisiblePosition();
+        ContentResolver contentResolver = mContext.getContentResolver();
+        contentResolver.delete(MediaStore.Audio.Media.EXTERNAL_CONTENT_URI, "_id = ?", new String[]{Integer.toString(mIndexList.get(mCurrentPosition))});
+        reloadMusicList();
+    }
+
+    /**
+     * 重新加载歌曲列表
+     */
+    private void reloadMusicList() {
+        mIndexList = new ArrayList<>();
+        mMusicList = new ArrayList<>();
+        initList();
+        initAdapter(mView);
+        mListView.setSelection(mFirstPosition);
     }
 }
