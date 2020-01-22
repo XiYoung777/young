@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
@@ -23,6 +25,7 @@ import androidx.fragment.app.Fragment;
 
 import com.template.young.Adapter.SingleAdapter;
 import com.template.young.Constant.MessageOrder;
+import com.template.young.Constant.MusicConstant;
 import com.template.young.R;
 import com.template.young.model.Music;
 import com.template.young.model.MyApplication;
@@ -135,14 +138,31 @@ public class FragmentSingle extends Fragment implements SingleAdapter.SingleCall
 
     @Override
     public void lastMusic() {
-        setHeadIcon(mCurrentPosition, View.GONE);
-        mLastPosition = mCurrentPosition;
+        mCurrentPosition = mApplication.getmPosition();
+        //使上次位置的headIcon消失
+        setHeadIcon(mCurrentPosition - mListView.getFirstVisiblePosition(), View.GONE);
+        mMusicList.get(mCurrentPosition).setmType(0);
         if (mCurrentPosition == 0) {
             mCurrentPosition = mMusicList.size() - 1;
         } else {
             mCurrentPosition = mCurrentPosition - 1;
         }
-        setHeadIcon(mCurrentPosition, View.VISIBLE);
+        //保存headIcon对象用于跟随点击事件
+        RelativeLayout headIcon = null;
+        if (mCurrentPosition - 1 < mListView.getFirstVisiblePosition()) {
+            mListView.setSelection(mCurrentPosition - 1);
+            int firstVisiblePosition = mListView.getFirstVisiblePosition();
+            headIcon = mListView.getChildAt(0).findViewById(R.id.single_list_head_icon);// 未生效
+            setHeadIcon(mListView.getFirstVisiblePosition() - mCurrentPosition, View.VISIBLE);
+        } else if (mCurrentPosition == mMusicList.size() - 1 && mListView.getFirstVisiblePosition() == 0) {
+            mListView.setSelection(mMusicList.size() - 13);
+            setHeadIcon(13, View.VISIBLE);
+        } else {
+            setHeadIcon(mCurrentPosition - mListView.getFirstVisiblePosition(), View.VISIBLE);
+            headIcon = mListView.getChildAt(mCurrentPosition - mListView.getFirstVisiblePosition()).findViewById(R.id.single_list_head_icon);
+        }
+        mMusicList.get(mCurrentPosition).setmType(1);
+        mApplication.setmSingleHeadIcon(headIcon);
         mApplication.setmPosition(mCurrentPosition);
         mBinder.setMusic(mMusicList.get(mCurrentPosition).getmFolder());
         mBinder.playMusic();
@@ -151,14 +171,39 @@ public class FragmentSingle extends Fragment implements SingleAdapter.SingleCall
 
     @Override
     public void nextMusic() {
-        setHeadIcon(mCurrentPosition, View.GONE);
+        mCurrentPosition = mApplication.getmPosition();
+        if (mCurrentPosition > MusicConstant.VISIBLECOUNT) {
+            setHeadIcon(mCurrentPosition - mListView.getFirstVisiblePosition(), View.GONE);
+        } else {
+            //单个视图内去除
+            setHeadIcon(mCurrentPosition - mListView.getFirstVisiblePosition(), View.GONE);
+        }
+        //更新mMusicList相应的选中类型为未选中
+        mMusicList.get(mCurrentPosition).setmType(0);
         mLastPosition = mCurrentPosition;
         if (mCurrentPosition == mMusicList.size() - 1) {
             mCurrentPosition = 0;
         } else {
             mCurrentPosition = mCurrentPosition + 1;
         }
-        setHeadIcon(mCurrentPosition, View.VISIBLE);
+        if (mCurrentPosition - mListView.getFirstVisiblePosition() > MusicConstant.VISIBLECOUNT) {
+            //设置屏幕跟随
+            mListView.setSelection(mListView.getFirstVisiblePosition() + 1);
+        }
+        //保存headIcon，使用点击的时候更改为消失
+        RelativeLayout headIcon = null;
+        if (mCurrentPosition == 0 && mListView.getFirstVisiblePosition() > MusicConstant.VISIBLECOUNT) {
+            mListView.setSelection(mCurrentPosition);
+            headIcon = mListView.getChildAt(mCurrentPosition).findViewById(R.id.single_list_head_icon); // 未生效
+        } else {
+            setHeadIcon(mCurrentPosition - mListView.getFirstVisiblePosition(), View.VISIBLE);
+            headIcon = mListView.getChildAt(mCurrentPosition - mListView.getFirstVisiblePosition()).findViewById(R.id.single_list_head_icon);
+        }
+//        headIcon = mListView.getChildAt(mCurrentPosition - mListView.getFirstVisiblePosition()).findViewById(R.id.single_list_head_icon);
+        mApplication.setmSingleHeadIcon(headIcon);
+        //更新mMusicList相应的选中类型为选中，并保存至mApplication
+        mMusicList.get(mCurrentPosition).setmType(1);
+        mApplication.setmMusicList(mMusicList);
         mApplication.setmPosition(mCurrentPosition);
         mBinder.setMusic(mMusicList.get(mCurrentPosition).getmFolder());
         mBinder.playMusic();

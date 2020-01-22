@@ -5,12 +5,12 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaMetadataRetriever;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,7 +21,6 @@ import com.template.young.model.Music;
 import com.template.young.model.MyApplication;
 import com.template.young.service.MusicService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SingleAdapter extends BaseAdapter {
@@ -84,6 +83,7 @@ public class SingleAdapter extends BaseAdapter {
         final Music item = getItem(position);
         final View view;
         final ViewHolder viewHolder;
+        mMusicList = mApplication.getmMusicList();
 
         if (convertView == null) {
             view = mInflater.inflate(R.layout.localmusic_single_item, null);
@@ -141,9 +141,11 @@ public class SingleAdapter extends BaseAdapter {
                 mApplication.setmPosition(position);
             }
         });
-        /*if (mMusicList.get(position).getmType() == 1) {
+        if (mMusicList.get(position).getmType() == 0) {
+            viewHolder.mHeadIcon.setVisibility(View.GONE);
+        } else {
             viewHolder.mHeadIcon.setVisibility(View.VISIBLE);
-        }*/
+        }
         return view;
     }/**
      * 更新playbar的信息
